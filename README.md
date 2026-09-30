@@ -27,3 +27,9 @@ Los medidores pueden mostrar datos inexactos, no detectar el dispositivo o dejar
 ## Propiedad
 
 Todos los derechos permanecen reservados por Red-Rood. El repositorio publico permite consultar el codigo, pero no concede una licencia general para redistribuirlo, modificarlo o incorporarlo en otros proyectos. Consulta [LICENSE](LICENSE).
+
+## Stream Deck
+
+El plugin independiente esta en [StreamDeckBatteryMonitor/](StreamDeckBatteryMonitor/). Requiere Stream Deck 7.1 o posterior y Node.js 24 para generar el instalador. Ejecuta `StreamDeckBatteryMonitor/Crear-StreamDeckPlugin.cmd` en Windows y abre el archivo `.streamDeckPlugin` generado.
+
+Para ver niveles actualizados, deja en ejecucion el medidor correspondiente. Ambos publican su lectura localmente en `%LOCALAPPDATA%\Red-Rood\BatteryMonitor`; el plugin no usa red. Agrega las acciones Keychron e HyperX como teclas separadas.
