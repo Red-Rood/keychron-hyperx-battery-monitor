@@ -127,6 +127,26 @@ function Test-StartupEnabled {
     return $null -ne $value
 }
 
+function Publish-BatterySnapshot {
+    param($Snapshot)
+    try {
+        $directory = Join-Path $env:LOCALAPPDATA 'Red-Rood\BatteryMonitor'
+        [System.IO.Directory]::CreateDirectory($directory) | Out-Null
+        $payload = [ordered]@{
+            state = [string]$Snapshot.State
+            name = [string]$Snapshot.Name
+            percent = $Snapshot.Percent
+            updatedAtUtc = [DateTime]::UtcNow.ToString('o')
+        }
+        $target = Join-Path $directory 'keychron.json'
+        $temporary = "$target.tmp"
+        [System.IO.File]::WriteAllText($temporary, ($payload | ConvertTo-Json -Compress), [System.Text.UTF8Encoding]::new($false))
+        Move-Item -LiteralPath $temporary -Destination $target -Force
+    } catch {
+        # Battery display remains usable if publishing for Stream Deck fails.
+    }
+}
+
 $notifyIcon = New-Object System.Windows.Forms.NotifyIcon
 $notifyIcon.Visible = $true
 $notifyIcon.Text = 'Keychron: buscando bateria...'
@@ -146,6 +166,7 @@ $notifyIcon.ContextMenuStrip = $menu
 
 $update = {
     $snapshot = Get-BatterySnapshot
+    Publish-BatterySnapshot -Snapshot $snapshot
     if ($snapshot.State -eq 'Ready') {
         $label = "Keychron: $($snapshot.Percent)%"
         $notifyIcon.Text = "$label - $($snapshot.Name)"
