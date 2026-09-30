@@ -71,8 +71,7 @@ try {
 }
 
 if (-not $noticeSeen) {
-$message = "PROYECTO PERSONAL`r`n`r`nEste medidor se comparte publicamente para consulta; no es un producto oficial ni cuenta con soporte. Puede mostrar datos incorrectos o dejar de funcionar. No lo uses como unica referencia para decisiones importantes. Se ofrece tal cual, sin promesa de actualizaciones.`r`n`r`nPulsa Aceptar para continuar."
-Pulsa Aceptar para continuar."
+    $message = "PROYECTO PERSONAL`r`n`r`nEste medidor se comparte publicamente para consulta; no es un producto oficial ni cuenta con soporte. Puede mostrar datos incorrectos o dejar de funcionar. No lo uses como unica referencia para decisiones importantes. Se ofrece tal cual, sin promesa de actualizaciones.`r`n`r`nPulsa Aceptar para continuar."
     $answer = [System.Windows.Forms.MessageBox]::Show(
         $message,
         'Aviso - Keychron V1 Max',
