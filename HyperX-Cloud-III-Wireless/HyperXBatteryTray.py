@@ -289,8 +289,46 @@ def main() -> int:
         print(json.dumps(reader.read(), ensure_ascii=True))
         return 0
 
+    if not ensure_disclaimer_accepted():
+        return 0
+
     TrayApp().run()
     return 0
+
+
+def ensure_disclaimer_accepted() -> bool:
+    registry_path = r"Software\Red-Rood\HyperXCloudIIIWirelessBatteryTray"
+    try:
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, registry_path) as key:
+            accepted, _ = winreg.QueryValueEx(key, "DisclaimerAccepted")
+            if accepted == 1:
+                return True
+    except OSError:
+        pass
+
+    message = (
+        "AVISO DE RESPONSABILIDAD\\n\\n"
+        "El programa puede contener errores, mostrar un nivel de bateria incorrecto o dejar de funcionar. "
+        "Se ofrece tal cual, sin garantia. Al elegir Si, declaras haber leido y aceptar las condiciones "
+        "del archivo LICENSE, incluido el deslinde de responsabilidad.\\n\\n"
+        "Aceptas y deseas iniciar el medidor?"
+    )
+    answer = ctypes.windll.user32.MessageBoxW(
+        None,
+        message,
+        "Aceptacion de condiciones - HyperX Cloud III Wireless",
+        0x00000004 | 0x00000030 | 0x00000100,  # Yes/No, warning icon, default No.
+    )
+    if answer != 6:  # IDYES
+        return False
+
+    try:
+        with winreg.CreateKey(winreg.HKEY_CURRENT_USER, registry_path) as key:
+            winreg.SetValueEx(key, "DisclaimerAccepted", 0, winreg.REG_DWORD, 1)
+    except OSError:
+        # The app can still run; the notice will appear again next time.
+        pass
+    return True
 
 
 if __name__ == "__main__":
