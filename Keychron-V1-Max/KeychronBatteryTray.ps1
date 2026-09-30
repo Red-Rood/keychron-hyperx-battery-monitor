@@ -58,33 +58,33 @@ if ($ProbeOnly) {
 }
 
 
-$acceptancePath = 'Software\Red-Rood\KeychronV1MaxBatteryTray'
-$accepted = $false
+$noticePath = 'Software\Red-Rood\KeychronV1MaxBatteryTray'
+$noticeSeen = $false
 try {
-    $acceptanceKey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($acceptancePath)
-    if ($null -ne $acceptanceKey) {
-        $accepted = ($acceptanceKey.GetValue('DisclaimerAccepted', 0) -eq 1)
-        $acceptanceKey.Dispose()
+    $noticeKey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($noticePath)
+    if ($null -ne $noticeKey) {
+        $noticeSeen = ($noticeKey.GetValue('NoticeSeen', 0) -eq 1)
+        $noticeKey.Dispose()
     }
 } catch {
-    # If registry access fails, ask again on the next launch.
+    # If registry access fails, show the notice again next time.
 }
 
-if (-not $accepted) {
-$message = "AVISO DE RESPONSABILIDAD`r`n`r`nEl programa puede contener errores, mostrar un nivel de bateria incorrecto o dejar de funcionar. Se ofrece tal cual, sin garantia. Al elegir Si, declaras haber leido y aceptar las condiciones del archivo LICENSE, incluido el deslinde de responsabilidad.`r`n`r`nAceptas y deseas iniciar el medidor?"
-Aceptas y deseas iniciar el medidor?"
+if (-not $noticeSeen) {
+    $message = "PROYECTO PERSONAL`r`n`r`nEste medidor se comparte publicamente para consulta; no es un producto oficial ni cuenta con soporte. Puede mostrar datos incorrectos o dejar de funcionar. No lo uses como unica referencia para decisiones importantes. Se ofrece tal cual, sin promesa de actualizaciones.`r`n`r
+Pulsa Aceptar para continuar."
     $answer = [System.Windows.Forms.MessageBox]::Show(
         $message,
-        'Aceptacion de condiciones - Keychron V1 Max',
-        [System.Windows.Forms.MessageBoxButtons]::YesNo,
-        [System.Windows.Forms.MessageBoxIcon]::Warning,
+        'Aviso - Keychron V1 Max',
+        [System.Windows.Forms.MessageBoxButtons]::OKCancel,
+        [System.Windows.Forms.MessageBoxIcon]::Information,
         [System.Windows.Forms.MessageBoxDefaultButton]::Button2
     )
-    if ($answer -ne [System.Windows.Forms.DialogResult]::Yes) { exit 0 }
+    if ($answer -ne [System.Windows.Forms.DialogResult]::OK) { exit 0 }
     try {
-        $acceptanceKey = [Microsoft.Win32.Registry]::CurrentUser.CreateSubKey($acceptancePath)
-        $acceptanceKey.SetValue('DisclaimerAccepted', 1, [Microsoft.Win32.RegistryValueKind]::DWord)
-        $acceptanceKey.Dispose()
+        $noticeKey = [Microsoft.Win32.Registry]::CurrentUser.CreateSubKey($noticePath)
+        $noticeKey.SetValue('NoticeSeen', 1, [Microsoft.Win32.RegistryValueKind]::DWord)
+        $noticeKey.Dispose()
     } catch {
         # The app can still run; the notice will appear again next time.
     }
