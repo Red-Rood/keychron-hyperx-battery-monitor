@@ -1,0 +1,19 @@
+{
+  "name": "red-rood-battery-monitor-streamdeck",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "install:runtime": "npm install --prefix com.red-rood.battery-monitor.sdPlugin --omit=dev",
+    "pack": "streamdeck pack com.red-rood.battery-monitor.sdPlugin --force"
+  },
+  "dependencies": {
+    "@elgato/streamdeck": "^3.0.1"
+  },
+  "devDependencies": {
+    "@elgato/cli": "^1.10.1",
+    "@types/node": "^24.3.0",
+    "typescript": "^5.8.3"
+  }
+}
