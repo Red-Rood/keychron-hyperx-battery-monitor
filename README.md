@@ -4,6 +4,10 @@ Aplicaciones independientes para Windows que muestran el nivel de bateria de cad
 
 Autor y propietario: **Red-Rood** (GitHub: CrimsonRood).
 
+## Aceptacion de condiciones
+
+Al descargar, instalar, ejecutar o utilizar cualquiera de los programas de este repositorio, declaras que leiste y aceptas sus condiciones, incluido el deslinde de garantia y responsabilidad indicado en [LICENSE](LICENSE). Si no estas de acuerdo, no descargues, instales ni utilices los programas.
+
 ## Keychron V1 Max
 
 Los archivos estan en [Keychron-V1-Max/](Keychron-V1-Max/). Ejecuta `Keychron-V1-Max/Iniciar-KeychronBatteryTray.cmd`. La lectura usa el nivel que Windows publica para el dispositivo Bluetooth conectado. El receptor original de 2,4 GHz normalmente no expone la bateria a aplicaciones externas.
