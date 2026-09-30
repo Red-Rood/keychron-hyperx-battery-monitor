@@ -16,6 +16,10 @@ Los archivos estan en [HyperX-Cloud-III-Wireless/](HyperX-Cloud-III-Wireless/). 
 
 Requiere Python 3 y los paquetes `hidapi`, `Pillow` y `pystray`, que instala el script para el usuario actual.
 
+## Deslinde de responsabilidad
+
+El software puede contener errores, mostrar un nivel de bateria inexacto o dejar de funcionar. Se proporciona "tal cual", sin garantia de exactitud ni funcionamiento ininterrumpido. Su uso es responsabilidad de quien lo ejecuta. El autor no sera responsable por danos derivados de su uso, en la medida permitida por la ley aplicable. El texto completo esta en [LICENSE](LICENSE).
+
 ## Propiedad
 
 El codigo se publica para consulta y uso personal. Todos los derechos permanecen reservados por Red-Rood. Consulta [LICENSE](LICENSE) antes de redistribuir, modificar o incorporar el codigo en otro proyecto.
