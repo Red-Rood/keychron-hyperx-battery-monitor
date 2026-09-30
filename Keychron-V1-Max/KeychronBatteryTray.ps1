@@ -57,6 +57,39 @@ if ($ProbeOnly) {
     exit 0
 }
 
+
+$acceptancePath = 'Software\Red-Rood\KeychronV1MaxBatteryTray'
+$accepted = $false
+try {
+    $acceptanceKey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($acceptancePath)
+    if ($null -ne $acceptanceKey) {
+        $accepted = ($acceptanceKey.GetValue('DisclaimerAccepted', 0) -eq 1)
+        $acceptanceKey.Dispose()
+    }
+} catch {
+    # If registry access fails, ask again on the next launch.
+}
+
+if (-not $accepted) {
+    $message = "AVISO DE RESPONSABILIDAD`r`n`r`nEl programa puede contener errores, mostrar un nivel de bateria incorrecto o dejar de funcionar. Se ofrece tal cual, sin garantia. Al elegir Si, declaras haber leido y aceptar las condiciones del archivo LICENSE, incluido el deslinde de responsabilidad.`r`n`r
+Aceptas y deseas iniciar el medidor?"
+    $answer = [System.Windows.Forms.MessageBox]::Show(
+        $message,
+        'Aceptacion de condiciones - Keychron V1 Max',
+        [System.Windows.Forms.MessageBoxButtons]::YesNo,
+        [System.Windows.Forms.MessageBoxIcon]::Warning,
+        [System.Windows.Forms.MessageBoxDefaultButton]::Button2
+    )
+    if ($answer -ne [System.Windows.Forms.DialogResult]::Yes) { exit 0 }
+    try {
+        $acceptanceKey = [Microsoft.Win32.Registry]::CurrentUser.CreateSubKey($acceptancePath)
+        $acceptanceKey.SetValue('DisclaimerAccepted', 1, [Microsoft.Win32.RegistryValueKind]::DWord)
+        $acceptanceKey.Dispose()
+    } catch {
+        # The app can still run; the notice will appear again next time.
+    }
+}
+
 function New-TrayIcon {
     param([int]$Percent)
     $bitmap = New-Object System.Drawing.Bitmap 32, 32
