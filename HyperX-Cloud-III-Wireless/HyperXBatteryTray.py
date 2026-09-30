@@ -193,6 +193,26 @@ def create_status_icon() -> Image.Image:
     return image
 
 
+def _publish_battery_snapshot(snapshot: dict) -> None:
+    local_app_data = os.environ.get("LOCALAPPDATA")
+    if not local_app_data:
+        return
+    directory = Path(local_app_data) / "Red-Rood" / "BatteryMonitor"
+    target = directory / "hyperx.json"
+    temporary = directory / "hyperx.json.tmp"
+    payload = {**snapshot, "updatedAtUtc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+    try:
+        directory.mkdir(parents=True, exist_ok=True)
+        temporary.write_text(json.dumps(payload, ensure_ascii=True), encoding="utf-8")
+        os.replace(temporary, target)
+    except OSError:
+        # Battery display remains usable if publishing for Stream Deck fails.
+        try:
+            temporary.unlink(missing_ok=True)
+        except OSError:
+            pass
+
+
 class TrayApp:
     def __init__(self) -> None:
         self.reader = BatteryReader()
@@ -223,6 +243,7 @@ class TrayApp:
 
     def _refresh_now(self, _icon=None, _item=None) -> None:
         self.snapshot = self.reader.read()
+        _publish_battery_snapshot(self.snapshot)
         if self.snapshot["state"] == "ready":
             percent = int(self.snapshot["percent"])
             label = f"HyperX: {percent}%"
