@@ -307,10 +307,10 @@ def ensure_notice_seen() -> bool:
         pass
 
     message = (
-        "PROYECTO PERSONAL\\n\\n"
+        "PROYECTO PERSONAL\n\n"
         "Este medidor se comparte publicamente para consulta; no es un producto oficial ni cuenta con soporte. "
         "Puede mostrar datos incorrectos o dejar de funcionar. No lo uses como unica referencia para decisiones "
-        "importantes. Se ofrece tal cual, sin promesa de actualizaciones.\\n\\n"
+        "importantes. Se ofrece tal cual, sin promesa de actualizaciones.\n\n"
         "Pulsa Aceptar para continuar."
     )
     answer = ctypes.windll.user32.MessageBoxW(
