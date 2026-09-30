@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
+  "Actions": [
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/actions/keychron",
+      "Name": "Bateria Keychron V1 Max",
+      "States": [
+        {
+          "Image": "imgs/keychron",
+          "ShowTitle": false
+        }
+      ],
+      "UUID": "com.red-rood.battery-monitor.keychron"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/actions/hyperx",
+      "Name": "Bateria HyperX Cloud III Wireless",
+      "States": [
+        {
+          "Image": "imgs/hyperx",
+          "ShowTitle": false
+        }
+      ],
+      "UUID": "com.red-rood.battery-monitor.hyperx"
+    }
+  ],
+  "Author": "Red-Rood",
+  "Category": "Battery Monitor",
+  "CodePath": "plugin.js",
+  "Description": "Muestra la bateria publicada localmente por los medidores Keychron y HyperX.",
+  "Icon": "imgs/plugin",
+  "Name": "Battery Monitor",
+  "Nodejs": {
+    "Version": "24"
+  },
+  "OS": [
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "SDKVersion": 3,
+  "Software": {
+    "MinimumVersion": "7.1"
+  },
+  "UUID": "com.red-rood.battery-monitor",
+  "Version": "1.0.0.0"
+}
