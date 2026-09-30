@@ -289,47 +289,46 @@ def main() -> int:
         print(json.dumps(reader.read(), ensure_ascii=True))
         return 0
 
-    if not ensure_disclaimer_accepted():
+    if not ensure_notice_seen():
         return 0
 
     TrayApp().run()
     return 0
 
 
-def ensure_disclaimer_accepted() -> bool:
+def ensure_notice_seen() -> bool:
     registry_path = r"Software\Red-Rood\HyperXCloudIIIWirelessBatteryTray"
     try:
         with winreg.OpenKey(winreg.HKEY_CURRENT_USER, registry_path) as key:
-            accepted, _ = winreg.QueryValueEx(key, "DisclaimerAccepted")
-            if accepted == 1:
+            seen, _ = winreg.QueryValueEx(key, "NoticeSeen")
+            if seen == 1:
                 return True
     except OSError:
         pass
 
     message = (
-        "AVISO DE RESPONSABILIDAD\n\n"
-        "El programa puede contener errores, mostrar un nivel de bateria incorrecto o dejar de funcionar. "
-        "Se ofrece tal cual, sin garantia. Al elegir Si, declaras haber leido y aceptar las condiciones "
-        "del archivo LICENSE, incluido el deslinde de responsabilidad.\n\n"
-        "Aceptas y deseas iniciar el medidor?"
+        "PROYECTO PERSONAL\\n\\n"
+        "Este medidor se comparte publicamente para consulta; no es un producto oficial ni cuenta con soporte. "
+        "Puede mostrar datos incorrectos o dejar de funcionar. No lo uses como unica referencia para decisiones "
+        "importantes. Se ofrece tal cual, sin promesa de actualizaciones.\\n\\n"
+        "Pulsa Aceptar para continuar."
     )
     answer = ctypes.windll.user32.MessageBoxW(
         None,
         message,
-        "Aceptacion de condiciones - HyperX Cloud III Wireless",
-        0x00000004 | 0x00000030 | 0x00000100,  # Yes/No, warning icon, default No.
+        "Aviso - HyperX Cloud III Wireless",
+        0x00000001 | 0x00000040 | 0x00000100,  # OK/Cancel, information icon, default Cancel.
     )
-    if answer != 6:  # IDYES
+    if answer != 1:  # IDOK
         return False
 
     try:
         with winreg.CreateKey(winreg.HKEY_CURRENT_USER, registry_path) as key:
-            winreg.SetValueEx(key, "DisclaimerAccepted", 0, winreg.REG_DWORD, 1)
+            winreg.SetValueEx(key, "NoticeSeen", 0, winreg.REG_DWORD, 1)
     except OSError:
         # The app can still run; the notice will appear again next time.
         pass
     return True
-
 
 if __name__ == "__main__":
     raise SystemExit(main())
