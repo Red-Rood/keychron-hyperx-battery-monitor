@@ -1,0 +1,7 @@
+node_modules/
+.npm-cache/
+com.red-rood.battery-monitor.sdPlugin/node_modules/
+com.red-rood.battery-monitor.sdPlugin/package-lock.json
+com.red-rood.battery-monitor.sdPlugin/plugin.js
+com.red-rood.battery-monitor.sdPlugin/imgs/plugin*.png
+*.streamDeckPlugin
