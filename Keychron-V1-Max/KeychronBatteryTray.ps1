@@ -71,7 +71,7 @@ try {
 }
 
 if (-not $accepted) {
-    $message = "AVISO DE RESPONSABILIDAD`r`n`r`nEl programa puede contener errores, mostrar un nivel de bateria incorrecto o dejar de funcionar. Se ofrece tal cual, sin garantia. Al elegir Si, declaras haber leido y aceptar las condiciones del archivo LICENSE, incluido el deslinde de responsabilidad.`r`n`r
+$message = "AVISO DE RESPONSABILIDAD`r`n`r`nEl programa puede contener errores, mostrar un nivel de bateria incorrecto o dejar de funcionar. Se ofrece tal cual, sin garantia. Al elegir Si, declaras haber leido y aceptar las condiciones del archivo LICENSE, incluido el deslinde de responsabilidad.`r`n`r`nAceptas y deseas iniciar el medidor?"
 Aceptas y deseas iniciar el medidor?"
     $answer = [System.Windows.Forms.MessageBox]::Show(
         $message,
