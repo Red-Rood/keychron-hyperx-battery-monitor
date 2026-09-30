@@ -307,10 +307,10 @@ def ensure_disclaimer_accepted() -> bool:
         pass
 
     message = (
-        "AVISO DE RESPONSABILIDAD\\n\\n"
+        "AVISO DE RESPONSABILIDAD\n\n"
         "El programa puede contener errores, mostrar un nivel de bateria incorrecto o dejar de funcionar. "
         "Se ofrece tal cual, sin garantia. Al elegir Si, declaras haber leido y aceptar las condiciones "
-        "del archivo LICENSE, incluido el deslinde de responsabilidad.\\n\\n"
+        "del archivo LICENSE, incluido el deslinde de responsabilidad.\n\n"
         "Aceptas y deseas iniciar el medidor?"
     )
     answer = ctypes.windll.user32.MessageBoxW(
