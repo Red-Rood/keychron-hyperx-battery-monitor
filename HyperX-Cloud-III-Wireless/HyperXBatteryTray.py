@@ -322,7 +322,7 @@ def ensure_notice_seen() -> bool:
     try:
         with winreg.OpenKey(winreg.HKEY_CURRENT_USER, registry_path) as key:
             seen, _ = winreg.QueryValueEx(key, "NoticeVersion")
-            if seen == 2:
+            if seen == 3:
                 return True
     except OSError:
         pass
@@ -346,7 +346,7 @@ def ensure_notice_seen() -> bool:
 
     try:
         with winreg.CreateKey(winreg.HKEY_CURRENT_USER, registry_path) as key:
-            winreg.SetValueEx(key, "NoticeVersion", 0, winreg.REG_DWORD, 2)
+            winreg.SetValueEx(key, "NoticeVersion", 0, winreg.REG_DWORD, 3)
     except OSError:
         # The app can still run; the notice will appear again next time.
         pass
