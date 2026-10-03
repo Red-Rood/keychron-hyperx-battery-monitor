@@ -63,7 +63,7 @@ $noticeSeen = $false
 try {
     $noticeKey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($noticePath)
     if ($null -ne $noticeKey) {
-        $noticeSeen = ($noticeKey.GetValue('NoticeSeen', 0) -eq 1)
+        $noticeSeen = ($noticeKey.GetValue('NoticeVersion', 0) -eq 2)
         $noticeKey.Dispose()
     }
 } catch {
@@ -82,7 +82,7 @@ if (-not $noticeSeen) {
     if ($answer -ne [System.Windows.Forms.DialogResult]::OK) { exit 0 }
     try {
         $noticeKey = [Microsoft.Win32.Registry]::CurrentUser.CreateSubKey($noticePath)
-        $noticeKey.SetValue('NoticeSeen', 1, [Microsoft.Win32.RegistryValueKind]::DWord)
+        $noticeKey.SetValue('NoticeVersion', 2, [Microsoft.Win32.RegistryValueKind]::DWord)
         $noticeKey.Dispose()
     } catch {
         # The app can still run; the notice will appear again next time.
