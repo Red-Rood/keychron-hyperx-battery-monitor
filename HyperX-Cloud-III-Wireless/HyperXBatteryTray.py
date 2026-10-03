@@ -329,7 +329,8 @@ def ensure_notice_seen() -> bool:
 
     message = (
         "PROYECTO PERSONAL\n\n"
-        "Este medidor se comparte publicamente para consulta; no es un producto oficial ni cuenta con soporte. "
+        "Creado para uso propio. Que el repositorio sea publico no significa que este programa se ofrezca "
+        "como producto o servicio. No es oficial ni cuenta con soporte. "
         "Puede mostrar datos incorrectos o dejar de funcionar. No lo uses como unica referencia para decisiones "
         "importantes. Se ofrece tal cual, sin promesa de actualizaciones.\n\n"
         "Pulsa Aceptar para continuar."
